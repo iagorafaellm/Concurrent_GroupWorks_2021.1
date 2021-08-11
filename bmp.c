@@ -18,7 +18,7 @@ typedef struct{
 
 typedef struct{
     unsigned int biSize; //specifies the size of the BITMAPINFOHEADER structure, in bytes.
-
+    unsigned int biWidth; // specifies the width of the image, in pixels.
 }infoHeader;
 
 
