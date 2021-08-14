@@ -7,7 +7,7 @@
 #include<string.h>
 
 const int BYTES_PER_PIXEL = 3; /// red, green, & blue
-const int FILE_HEADER_SIZE = 14;
+const int FILE_HEADER_SIZE = 14; 
 const int INFO_HEADER_SIZE = 40;
 
 void generateBitmapImage(unsigned char* image, int height, int width, char* imageFileName);
@@ -38,7 +38,6 @@ int main ()
                     image[(height/2)+i][j+width/2][1] = 0; ///green
                     image[(height/2)+i][j+width/2][0] = 0; ///blue
                 }
-                
             }
             else{
                 if(j < 0){
@@ -51,7 +50,6 @@ int main ()
                     image[i][j+width/2][1] = 255; ///green
                     image[i][j+width/2][0] = 255; ///blue
                 }
-                
             }
         }
     }
@@ -93,10 +91,10 @@ unsigned char* createBitmapFileHeader (int height, int stride)
     int fileSize = FILE_HEADER_SIZE + INFO_HEADER_SIZE + (stride * height);
 
     static unsigned char fileHeader[] = {
-        0,0,     /// signature
-        0,0,0,0, /// image file size in bytes
-        0,0,0,0, /// reserved
-        0,0,0,0, /// start of pixel array
+        0,0,     /// signature - must always be set to 'BM' to declare that this is a .bmp-file.
+        0,0,0,0, /// image file size in bytes - specifies the size of the file in bytes.
+        0,0,0,0, /// reserved - must always be set to zero.
+        0,0,0,0, /// start of pixel array - specifies the offset from the beginning of the file to the bitmap data.
     };
 
     fileHeader[ 0] = (unsigned char)('B');
@@ -113,17 +111,18 @@ unsigned char* createBitmapFileHeader (int height, int stride)
 unsigned char* createBitmapInfoHeader (int height, int width)
 {
     static unsigned char infoHeader[] = {
-        0,0,0,0, /// header size
-        0,0,0,0, /// image width
-        0,0,0,0, /// image height
-        0,0,     /// number of color planes
-        0,0,     /// bits per pixel
-        0,0,0,0, /// compression
-        0,0,0,0, /// image size
-        0,0,0,0, /// horizontal resolution
-        0,0,0,0, /// vertical resolution
-        0,0,0,0, /// colors in color table
-        0,0,0,0, /// important color count
+        0,0,0,0, /// header size - specifies the size of the BITMAPINFOHEADER structure, in bytes.
+        0,0,0,0, /// image width - specifies the width of the image, in pixels.
+        0,0,0,0, /// image height - specifies the height of the image, in pixels.
+        0,0,     /// number of color planes - specifies the number of planes of the target device, must be set to zero.
+        0,0,     /// bits per pixel - specifies the number of bits per pixel.
+        0,0,0,0, /// compression - Specifies the type of compression, usually set to zero (no compression).
+        0,0,0,0, /// image size - specifies the size of the image data, in bytes. If there is no compression, it is valid to set this member to zero.
+        0,0,0,0, /// horizontal resolution - specifies the the horizontal pixels per meter on the designated targer device, usually set to zero.
+        0,0,0,0, /// vertical resolution - specifies the the vertical pixels per meter on the designated targer device, usually set to zero.
+        0,0,0,0, /// colors in color table - specifies the number of colors used in the bitmap, if set to zero the number of colors is calculated using the biBitCount member.
+        0,0,0,0, /// important color count - specifies the number of color that are 'important' for the bitmap, if set to zero, all colors are important.
+
     };
 
     infoHeader[ 0] = (unsigned char)(INFO_HEADER_SIZE);
