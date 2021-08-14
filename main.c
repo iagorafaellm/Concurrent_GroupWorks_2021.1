@@ -72,5 +72,5 @@ int main ()
     }
 
     generateBitmapImage((unsigned char*) image, height, width, imageFileName);
-    printf("%s generated!!\n", imageFileName);
+    printf("%s generated!\n", imageFileName);
 }
