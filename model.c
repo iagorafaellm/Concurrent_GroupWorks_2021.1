@@ -1,4 +1,10 @@
+/*
+* code that i found on the internet and will be used as model to make a library that will help us to draw a 
+* bmp image
+*/
+
 #include <stdio.h>
+#include<string.h>
 
 const int BYTES_PER_PIXEL = 3; /// red, green, & blue
 const int FILE_HEADER_SIZE = 14;
@@ -11,17 +17,43 @@ unsigned char* createBitmapInfoHeader(int height, int width);
 
 int main ()
 {
-    int height = 361;
-    int width = 867;
+    int height = 200;
+    int width = 200;
     unsigned char image[height][width][BYTES_PER_PIXEL];
-    char* imageFileName = (char*) "bitmapImage.bmp";
+    char* imageFileName;
+    
+    sprintf(imageFileName,"%dx%d.bmp",width,height);
 
     int i, j;
-    for (i = 0; i < height; i++) {
-        for (j = 0; j < width; j++) {
-            image[i][j][2] = (unsigned char) ( i * 255 / height );             ///red
-            image[i][j][1] = (unsigned char) ( j * 255 / width );              ///green
-            image[i][j][0] = (unsigned char) ( (i+j) * 255 / (height+width) ); ///blue
+    for (i = -height/2; i < height/2; i++) {
+        for (j = -width/2; j < (width/2); j++) {
+
+            if(i==(j*j+10*j+10)){
+                if(j < 0){
+                    image[(height/2)-i][(width/2)-abs(j)][2] = 255; ///red
+                    image[(height/2)-i][(width/2)-abs(j)][1] = 0; ///green
+                    image[(height/2)-i][(width/2)-abs(j)][0] = 0; ///blue
+                }
+                else{
+                    image[(height/2)+i][j+width/2][2] = 255; ///red
+                    image[(height/2)+i][j+width/2][1] = 0; ///green
+                    image[(height/2)+i][j+width/2][0] = 0; ///blue
+                }
+                
+            }
+            else{
+                if(j < 0){
+                    image[i][(width/2)-abs(j)][2] = 255; ///red
+                    image[i][(width/2)-abs(j)][1] = 255; ///green
+                    image[i][(width/2)-abs(j)][0] = 255; ///blue
+                }
+                else{
+                    image[i][j+width/2][2] = 255; ///red
+                    image[i][j+width/2][1] = 255; ///green
+                    image[i][j+width/2][0] = 255; ///blue
+                }
+                
+            }
         }
     }
 
@@ -36,6 +68,7 @@ void generateBitmapImage (unsigned char* image, int height, int width, char* ima
 
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (widthInBytes) % 4) % 4;
+    //widthInBytes = (4 - (widthInBytes) % 4) % 4;
 
     int stride = (widthInBytes) + paddingSize;
 
@@ -49,8 +82,9 @@ void generateBitmapImage (unsigned char* image, int height, int width, char* ima
 
     int i;
     for (i = 0; i < height; i++) {
-        fwrite(image+(i*widthInBytes), BYTES_PER_PIXEL, width, imageFile);
-        fwrite(padding, 1, paddingSize, imageFile);
+        fwrite(image + (i*widthInBytes), BYTES_PER_PIXEL, width, imageFile);
+        if(width > height)
+            fwrite(padding, 1, paddingSize, imageFile);
     }
 
     fclose(imageFile);
