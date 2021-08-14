@@ -5,58 +5,18 @@
 
 #include <stdio.h>
 #include<string.h>
+#include<stdlib.h>
+#include"bmp.h"
 
-const int BYTES_PER_PIXEL = 3; /// red, green, & blue
-const int FILE_HEADER_SIZE = 14; 
-const int INFO_HEADER_SIZE = 40;
+// const int BYTES_PER_PIXEL = 3; /// red, green, & blue
+// const int FILE_HEADER_SIZE = 14; 
+// const int INFO_HEADER_SIZE = 40;
 
-void generateBitmapImage(unsigned char* image, int height, int width, char* imageFileName);
-unsigned char* createBitmapFileHeader(int height, int stride);
-unsigned char* createBitmapInfoHeader(int height, int width);
+// void generateBitmapImage(unsigned char* image, int height, int width, char* imageFileName);
+// unsigned char* createBitmapFileHeader(int height, int stride);
+// unsigned char* createBitmapInfoHeader(int height, int width);
 
-int main ()
-{
-    int height = 200;
-    int width = 200;
-    unsigned char image[height][width][BYTES_PER_PIXEL];
-    char* imageFileName;
 
-    sprintf(imageFileName,"%dx%d.bmp",width,height);
-
-    int i, j;
-    for (i = -height/2; i < height/2; i++) {
-        for (j = -width/2; j < (width/2); j++) {
-
-            if(i==(j*j)){
-                if(j < 0){
-                    image[(height/2)-i][(width/2)-abs(j)][2] = 255; ///red
-                    image[(height/2)-i][(width/2)-abs(j)][1] = 0; ///green
-                    image[(height/2)-i][(width/2)-abs(j)][0] = 0; ///blue
-                }
-                else{
-                    image[(height/2)+i][j+width/2][2] = 255; ///red
-                    image[(height/2)+i][j+width/2][1] = 0; ///green
-                    image[(height/2)+i][j+width/2][0] = 0; ///blue
-                }
-            }
-            else{
-                if(j < 0){
-                    image[i][(width/2)-abs(j)][2] = 255; ///red
-                    image[i][(width/2)-abs(j)][1] = 255; ///green
-                    image[i][(width/2)-abs(j)][0] = 255; ///blue
-                }
-                else{
-                    image[i][j+width/2][2] = 255; ///red
-                    image[i][j+width/2][1] = 255; ///green
-                    image[i][j+width/2][0] = 255; ///blue
-                }
-            }
-        }
-    }
-
-    generateBitmapImage((unsigned char*) image, height, width, imageFileName);
-    printf("Image generated!!");
-}
 
 void generateBitmapImage (unsigned char* image, int height, int width, char* imageFileName)
 {
@@ -82,7 +42,6 @@ void generateBitmapImage (unsigned char* image, int height, int width, char* ima
         if(width > height)
             fwrite(padding, 1, paddingSize, imageFile);
     }
-
     fclose(imageFile);
 }
 
@@ -126,7 +85,7 @@ unsigned char* createBitmapInfoHeader (int height, int width)
     };
 
     infoHeader[ 0] = (unsigned char)(INFO_HEADER_SIZE);
-    infoHeader[ 4] = (unsigned char)(width      );
+    infoHeader[ 4] = (unsigned char)(width      ); 
     infoHeader[ 5] = (unsigned char)(width >>  8);
     infoHeader[ 6] = (unsigned char)(width >> 16);
     infoHeader[ 7] = (unsigned char)(width >> 24);
