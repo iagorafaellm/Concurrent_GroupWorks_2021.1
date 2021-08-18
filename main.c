@@ -57,12 +57,12 @@ int main(int argc, char* argv[])
             else{
                 if(j < 0){
                     if(i<0){
-                        
                         image[(height/2)-abs(i)][(width/2)-abs(j)][2] = 255; ///red
                         image[(height/2)-abs(i)][(width/2)-abs(j)][1] = 255; ///green
                         image[(height/2)-abs(i)][(width/2)-abs(j)][0] = 255; ///blue
                     }
                     else{
+                        //draw negative x axis
                         if(i == 0 || j == 0){
                             image[i+(height/2)][(width/2)-abs(j)][2] = 119; ///red
                             image[i+(height/2)][(width/2)-abs(j)][1] = 136; ///green
@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
                 }
                 else{
                     if(i<0){
+                        //draw negative y axis
                         if(j == 0){
                             image[(height/2)-abs(i)][j+width/2][2] = 119; ///red
                             image[(height/2)-abs(i)][j+width/2][1] = 136; ///green
@@ -90,6 +91,7 @@ int main(int argc, char* argv[])
                         
                     }
                     else{
+                        //draw positive c y axis
                         if(i == 0 || j == 0){
                             image[i+(height/2)][j+width/2][2] = 119; ///red
                             image[i+(height/2)][j+width/2][1] = 136; ///green
