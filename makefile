@@ -12,4 +12,4 @@ bmp.o: bmp.c
 	${CC} -c bmp.c -c -g -Wall
 
 clean:
-	rm -rf *.o *~ main
+	rm -rf *.o *.bmp *~ main

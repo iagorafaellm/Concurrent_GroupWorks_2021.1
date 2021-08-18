@@ -15,13 +15,14 @@ int main(int argc, char* argv[])
     
     unsigned char image[height][width][BYTES_PER_PIXEL];
     char* imageFileName;
-
+    imageFileName = (char*) malloc(sizeof(int)*2 + sizeof(char)*5);
     sprintf(imageFileName,"%dx%d.bmp",width,height);
 
     int i, j;
     int nj,ni;
     for (i = -height/2; i < height/2; i++) {
         for (j = -width/2; j < (width/2); j++) {
+            //compare the equation
             if(i==(j*j+20*j+20)){
                 if(j < 0){
                     nj = (width/2)-abs(j);
@@ -72,7 +73,7 @@ int main(int argc, char* argv[])
                             image[i+(height/2)][(width/2)-abs(j)][2] = 255; ///red
                             image[i+(height/2)][(width/2)-abs(j)][1] = 255; ///green
                             image[i+(height/2)][(width/2)-abs(j)][0] = 255; ///blue
-                        }
+                        }   
                     }
                 }
                 else{
