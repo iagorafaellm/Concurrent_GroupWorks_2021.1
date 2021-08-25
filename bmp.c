@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include <math.h>
 #include"bmp.h"
 
 // const int BYTES_PER_PIXEL = 3; /// red, green, & blue
@@ -16,12 +17,58 @@
 // unsigned char* createBitmapFileHeader(int height, int stride);
 // unsigned char* createBitmapInfoHeader(int height, int width);
 
-
-
-void generateBitmapImage (unsigned char* image, int height, int width, char* imageFileName)
+void generateBitmapImage (point* coor, int heigh, int width, char* imageFileName)
 {
-    int widthInBytes = width * BYTES_PER_PIXEL;
+    int height = 1000;
+    unsigned char image[height][width][BYTES_PER_PIXEL];
 
+    for(int i = 0;i<height;i++){
+        for(int j = 0; j< width;j++){
+            if(j == width/2 || i == height/2){
+                image[i][j][2] = 119; ///red
+                image[i][j][1] = 136; ///blue
+                image[i][j][0] = 153; ///green
+            }
+            else{
+                image[i][j][2] = 255; ///red
+                image[i][j][1] = 255; ///blue
+                image[i][j][0] = 255; ///green
+            }
+        }
+    }
+    for(int i = -height/2; i < height/2; i++){
+
+        //here we verify if the values fit to the size of the array(height)
+        if(
+        coor[i+height/2].y+height/2 > height ||
+        coor[i+height/2].x+width/2 > width ||
+        i+height/2 > height
+        ) continue;
+        
+        if(coor[i+height/2].y+height/2 > 0){
+            image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][2] = 255;
+            image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][1] = 0;
+            image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][0] = 0;
+        }
+        
+    }    
+    
+    // for(int i = 0; i < height; i++){
+    //     // printf("%d+++%f\n", i,sqrt(height));
+    //     // printf("\n%d--%d\n",values[i][1],values[i][0]);
+    //     if(values[i][1]+height/2 > height){
+    //         continue;
+    //     }
+    //     if(values[i][1]+height/2 == -1){
+    //         printf("%d\n", values[i][0]-height/2);
+    //     }
+    //     image[values[i][1]+height/2][values[i][0]-height/2][2] = 255;
+    //     image[values[i][1]+height/2][values[i][0]-height/2][1] = 0;
+    //     image[values[i][1]+height/2][values[i][0]-height/2][0] = 0;
+    // }
+
+    unsigned char* img = (unsigned char*) image;
+    int widthInBytes = width * BYTES_PER_PIXEL;
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (widthInBytes) % 4) % 4;
     //widthInBytes = (4 - (widthInBytes) % 4) % 4;
@@ -38,7 +85,7 @@ void generateBitmapImage (unsigned char* image, int height, int width, char* ima
 
     int i;
     for (i = 0; i < height; i++) {
-        fwrite(image + (i*widthInBytes), BYTES_PER_PIXEL, width, imageFile);
+        fwrite(img + (i*widthInBytes), BYTES_PER_PIXEL, width, imageFile);
         if(width > height)
             fwrite(padding, 1, paddingSize, imageFile);
     }
