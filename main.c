@@ -80,7 +80,10 @@ int main(int argc, char* argv[])
     //     }
     // }
     
-
+    char str[15] = "x*x*x+7-8*x+5/2";
+    char* ptr;
+    strtol("x*x*x+7-8*x+5/2", &ptr,0);
     generateBitmapImage(calcular(width/2,-width/2,-1,0,0), height, width, imageFileName);
+    transform(str);
     printf("%s generated!\n", imageFileName);
 }

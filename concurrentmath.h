@@ -5,9 +5,10 @@
         int x;
         int y;
     }coordinate;
-    
+
 
     coordinate* calcular(int xMax, int xMin, int a, int b, int c);
+    void* transform(char* eq);
 
 
 #endif
