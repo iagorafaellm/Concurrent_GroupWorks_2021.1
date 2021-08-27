@@ -1,6 +1,6 @@
+#pragma once
 #ifndef BMP_H
-
-    //#include "concurrentmath.h"
+    
     #define BYTES_PER_PIXEL 3 /// red, green, & blue
     #define FILE_HEADER_SIZE 14 
     #define INFO_HEADER_SIZE 40

@@ -80,10 +80,13 @@ int main(int argc, char* argv[])
     //     }
     // }
     
-    char str[15] = "x*x*x+7-8*x+5/2";
-    char* ptr;
-    strtol("x*x*x+7-8*x+5/2", &ptr,0);
-    generateBitmapImage(calcular(width/2,-width/2,-1,0,0), height, width, imageFileName);
-    transform(str);
+    // char str[20] = "x*x*x+77-8*x+5/2";
+    // char* ptr;
+    // printf("input: %s\n", str);
+    // substitui(str);
+    // strtol("x*x*x+7-8*x+5/2", &ptr,0);
+    // transform(str);
+    // printf("atoi -- %d\n",atoi("123456+78910-111213"));
+    generateBitmapImage(calcular(width/2,-width/2,-1,0,0), height, width, imageFileName);    
     printf("%s generated!\n", imageFileName);
 }
