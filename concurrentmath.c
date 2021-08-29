@@ -2,9 +2,14 @@
 #include<stdlib.h>
 #include<math.h>
 #include<string.h>
+#include<pthread.h>
 #include"concurrentmath.h"
 
-coordinate* calcular(int xMax, int xMin, int a, int b, int c){
+//variáveis globais
+int nthreads; //número de threads a serem criadas
+
+void* calcular(void* arg){
+    calcArg args = *(calcArg *) arg;
     coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(xMax+abs(xMin)));
     
     for(int i = xMin; i < xMax; i++){
@@ -12,15 +17,60 @@ coordinate* calcular(int xMax, int xMin, int a, int b, int c){
         coor[i+xMax].y = a*i*i+b*i+c;
     }
 
-    return coor;
+    pthread_exit((void *) coor);
+}
+
+//cria os identificadores da threads
+pthread_t* createTid() {
+pthread_t* tid = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
+  if (tid == NULL) {
+    printf("ERRO--createTid");
+    exit(-1);
+  }
+
+  return tid;
+}
+
+//cria as threads
+void createThread(pthread_t tid[]) {
+    calcArg args[nthreads];
+    for(int i = 0; i < nthreads; i++) {
+        args[i].xMax = width/2;
+        args[i].xMin = (-width/2) + i;
+        args[i].a = -1;
+        args[i].b = 0;
+        args[i].c = 0;
+
+
+        if (pthread_create(&tid[i], NULL, calcular, (void *) &args[i])) {
+            printf("Erro na pthread_create()\n");
+            exit(-2);
+        }
+    }
+}
+
+//espera as threads terminarem
+void joinThread(pthread_t tid[]) {
+    for(int i = 0; i < nthreads; i++) {
+        void* argCoor; //variável que usamos para armazenar o retorno da função calcular
+
+        if (pthread_join(tid[i], &argCoor)) {
+            printf("Erro na pthread_join()\n");
+            exit(-3);
+        }
+
+        coordinate* coord = (coordinate *) argCoord; //váriavel que armazena os pontos a serem plotados
+    }
+    
+      
 }
 
 void* transform(char* eq){
-
     char* token;
     char* str;
     char deli[3] = "x";
     token = strtok(eq,deli);
+
     while (token!=NULL)
     {
         str = (char*) malloc(sizeof(char)*strlen(token));
@@ -31,13 +81,11 @@ void* transform(char* eq){
     }
 }
 
-//fita de operações - maquina de turing -- matriz: opeção /- posi~çao na str
-
 void substitui(char* str){
     // x*22*9/18*5*x
     
     int size = strlen(str);
-    char* nstr =  (char*) malloc(sizeof(char)*size);
+    char* nstr = (char*) malloc(sizeof(char)*size);
     strcpy(nstr, str);
     char* operations = (char*) malloc(sizeof(char)*size);
     equation numberpr;

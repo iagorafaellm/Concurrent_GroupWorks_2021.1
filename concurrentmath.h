@@ -12,10 +12,12 @@
         char* number;
     }equation;
 
+    typedef struct{
+        int xMax, xMin, a, b, c;
+    }calcArg;
 
-    coordinate* calcular(int xMax, int xMin, int a, int b, int c);
+    void* calcular(void* arg);
     void* transform(char* eq);
     void substitui(char* str);
-
 
 #endif
