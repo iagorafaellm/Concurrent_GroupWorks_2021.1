@@ -89,14 +89,12 @@ int main(int argc, char* argv[])
     // strtol("x*x*x+7-8*x+5/2", &ptr,0);
     // transform(str);
     // printf("atoi -- %d\n",atoi("123456+78910-111213"));
-    createThread(tid);
     
-    for(int i = 0; i < nthreads; i++){
-        joinThread(tid[i]);
-    }
+    createThread(tid);
+    joinThread(tid);
 
-    generateBitmapImage(calcular(width/2,-width/2,-1,0,0), height, width, imageFileName);    
+    generateBitmapImage(coordsArray, height, width, imageFileName);
     printf("%s generated!\n", imageFileName);
 
-    free(tid);
+    free(tid); //apagar se der ruim!!
 }

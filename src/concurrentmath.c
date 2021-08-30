@@ -9,12 +9,14 @@ void* calcular(void* arg){
     calcArg args = *(calcArg *) arg;
     coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(args.xMax+abs(args.xMin)));
     
-    for(int i = args.xMin; i < args.xMax; i++){
+    for(int i = args.xMin; i < args.xMax; i += nthreads){
         coor[i+args.xMax].x = i;
         coor[i+args.xMax].y = (args.a*i*i)+(args.b*i)+args.c;
     }
 
-    pthread_exit((void *) coor);
+    coordsArray[i] = coor;
+
+    pthread_exit(NULL);
 }
 
 //cria os identificadores da threads
@@ -38,7 +40,6 @@ void createThread(pthread_t tid[]) {
         args[i].b = 0;
         args[i].c = 0;
 
-
         if (pthread_create(&tid[i], NULL, calcular, (void *) &args[i])) {
             printf("Erro na pthread_create()\n");
             exit(-2);
@@ -58,11 +59,6 @@ void joinThread(pthread_t tid[]) {
 
         coordinate* coord = (coordinate *) argCoord; //váriavel que armazena os pontos a serem plotados
     }
-
-    // for(int i = 0; i < nthreads; i += nthreads){
-        
-        
-    // }     
 }
 
 void* transform(char* eq){
