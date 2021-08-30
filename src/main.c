@@ -1,144 +1,102 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include<string.h>
+#include<stdlib.h>
 #include <math.h>
-#include <string.h>
-#include <pthread.h>
-#include "../lib/concurrentmath.h"
+#include"../lib/bmp.h"
+#include"../lib/concurrentmath.h"
 
-void* calcular(void* arg){
-    calcArg args = *(calcArg *) arg;
-    coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(args.xMax+abs(args.xMin)));
+int main(int argc, char* argv[])
+{   
 
-    //printf("%d\n", args.xMin);
-        
+    int height = 500;
+    int width  = 500;
+    if(argc > 2){
+        height = atoi(argv[2]);
+        width = atoi(argv[1]);        
+    }
+    //coordinate* c = calcular(250,-250,1,0,0);
+    //printf("%d--%d\n",c[0].x ,c[0].y);
     
-    for(int i = args.xMin; i < args.xMax; i += nthreads){
-        coor[i+args.xMax].x = i;
-        coor[i+args.xMax].y = (args.a*i*i)+(args.b*i)+args.c;
+//    unsigned char image[height][width][BYTES_PER_PIXEL];
+    char* imageFileName;
+    imageFileName = (char*) malloc(sizeof(int)*2 + sizeof(char)*5);
+    sprintf(imageFileName,"%dx%d.bmp",width,height);
 
-        
-        //printf("%d %d\n", coor[i+args.xMax].x, coor[i+args.xMax].y);
+    // int i, j;
+    // int nj,ni;
+    // int g;
+    // //paint the canvas and the axis
+    // for(i = 0;i<height;i++){
+    //     for(j = 0; j< width;j++){
+    //         if(j == width/2 || i == height/2){
+    //             image[i][j][2] = 119; ///red
+    //             image[i][j][1] = 136; ///blue
+    //             image[i][j][0] = 153; ///green
+    //         }
+    //         else{
+    //             image[i][j][2] = 255; ///red
+    //             image[i][j][1] = 255; ///blue
+    //             image[i][j][0] = 255; ///green
+    //         }
+    //     }
+    // }
 
-        coordsArray[i+args.xMax] = *coor;
-    }
-    pthread_exit(NULL);
-}
-
-//cria os identificadores da threads
-pthread_t* createTid() {
-pthread_t* tid = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
-  if (tid == NULL) {
-    printf("ERRO--createTid");
-    exit(-1);
-  }
-
-  return tid;
-}
-
-//cria as threads
-void createThread(pthread_t tid[], calcArg argsBase) {
-    calcArg args[nthreads];
-    for(int i = 0; i < nthreads; i++) {
-        args[i].xMax = argsBase.xMax;
-        args[i].xMin = argsBase.xMin + i;
-        args[i].a = argsBase.a;
-        args[i].b = argsBase.b;
-        args[i].c = argsBase.c;
-
-        printf("%d\n", args[i].xMin);
-
-        
-
-        if (pthread_create(&tid[i], NULL, calcular, (void *) &args[i])) {
-            printf("Erro na pthread_create()\n");
-            exit(-2);
-        }
-    }
-}
-
-//espera as threads terminarem
-void joinThread(pthread_t tid[]) {
-    for(int i = 0; i < nthreads; i++) {
-        //variável que usamos para armazenar o retorno da função calcular
-
-        if (pthread_join(tid[i], NULL)) {
-            printf("Erro na pthread_join()\n");
-            exit(-3);
-        }
-
-        
-    }
-}
-
-void* transform(char* eq){
-    char* token;
-    char* str;
-    char deli[3] = "x";
-    token = strtok(eq,deli);
-
-    while (token!=NULL)
-    {
-        str = (char*) malloc(sizeof(char)*strlen(token));
-        // if(strpbrk(token, 'x'))
-            // substitui(token);
-        printf("%s\n",token);
-        token = strtok(NULL, deli);        
-    }
-}
-
-void substitui(char* str){
-    // x*22*9/18*5*x
+    // for (i = -height/2; i < height/2; i++) {
+    //     for (j = -width/2; j < (width/2); j++) {
+    //         //compare the equation
+    //         if(i==j*j+20*j+20){
+    //             g = j;
+    //             if(j < 0){
+    //                 nj = (width/2)-abs(j);
+    //                 if(i<0){
+    //                     ni = (height/2)-abs(i);                        
+    //                     image[ni][nj][2] = 255; ///red
+    //                     image[ni][nj][1] = 0; ///green
+    //                     image[ni][nj][0] = 0; ///blue
+    //                 }                    
+    //                 else{
+    //                     ni = i+(height/2);
+    //                     image[ni][nj][2] = 255; ///red
+    //                     image[ni][nj][1] = 0; ///green
+    //                     image[ni][nj][0] = 0; ///blue
+    //                 }
+    //             }
+    //             else{
+    //                 nj = j+width/2;
+    //                 if(i<0){
+    //                     ni = (height/2)-abs(i);
+    //                     image[ni][nj][2] = 255; ///red
+    //                     image[ni][nj][1] = 0; ///green
+    //                     image[ni][nj][0] = 0; ///blue
+    //                 }
+    //                 else{
+    //                     ni = i+(height/2);
+    //                     image[ni][nj][2] = 255; ///red
+    //                     image[ni][nj][1] = 0; ///green
+    //                     image[ni][nj][0] = 0; ///blue
+    //                 }
+    //             }
+    //         }            
+    //     }
+    // }
     
-    int size = strlen(str);
-    char* nstr = (char*) malloc(sizeof(char)*size);
-    strcpy(nstr, str);
-    char* operations = (char*) malloc(sizeof(char)*size);
-    equation numberpr;
-    equation numberpo;
+    char str[20] = "x*x*x+77-8*x+5/2";
+    // printf("%c -- %d\n", str[strlen(str)],strlen(str));
+    
+    // printf("%d\n", sizeof(int));
 
-    //x*x*x+77-8*x+5/2
-    for(int i = 0; i < size;i++){
-        if(nstr[i] == '-' || nstr[i] == '+' || nstr[i] == '*' || nstr[i] == '/'){
-            operations[i] = str[i];
-            int count = 1;
-            numberpr.number = (char*) malloc(sizeof(char)*10);
-            numberpo.number = (char*) malloc(sizeof(char)*10);
+    
+    // printf("%d\n",  arr[0][0]);
 
-            while(i-count >= 0 && i+count < size){
-
-                if(nstr[i-1] == 'x' ){
-                    numberpr.number[0] = 'x';
-                    numberpr.pos = i;
-                }
-                else{
-                    if(str[i-count] > '0' && str[i-count] < '9'){
-                        numberpr.number[count-1] = str[i-count];
-                        numberpr.pos = i;
-                    }
-                }
-                if(nstr[i+1] == 'x'){
-                    numberpo.number[0] = 'x';
-                    numberpo.pos = i;
-                }
-                else{
-                    if(str[i+count] > '0' && str[i+count] < '9'){
-                        numberpo.number[count-1] = str[i+count];
-                        numberpo.pos = i;
-                    }
-                }
-        
-                count++;
-            }
-
-            if(strlen(numberpr.number) > 0){
-                printf("pre: %s\n", numberpr.number);
-                printf("%c\n", operations[numberpr.pos]);
-            }
-            
-            if(strlen(numberpo.number) > 0){
-                printf("pos: %s\n\n", numberpo.number);
-                //printf("-- %c\n", operations[numberpo.pos]);
-            }
-        }
-    }
+    // char* ptr;
+    // printf("input: %s\n", str);
+    // substitui(str);
+    // strtol("x*x*x+7-8*x+5/2", &ptr,0);
+    // transform(str);
+    // printf("atoi -- %d\n",atoi("123456+78910-111213"));
+    //3x^2+5x+7
+    
+    
+    generateBitmapImage(threads(width/2,-width/2,0,0,2), height, width, imageFileName);
+    printf("%s generated!\n", imageFileName);
 }
