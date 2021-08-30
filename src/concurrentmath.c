@@ -1,20 +1,17 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<string.h>
-#include<pthread.h>
-#include"concurrentmath.h"
-
-//variáveis globais
-int nthreads; //número de threads a serem criadas
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <pthread.h>
+#include "../lib/concurrentmath.h"
 
 void* calcular(void* arg){
     calcArg args = *(calcArg *) arg;
-    coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(xMax+abs(xMin)));
+    coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(args.xMax+abs(args.xMin)));
     
-    for(int i = xMin; i < xMax; i++){
-        coor[i+xMax].x = i;
-        coor[i+xMax].y = a*i*i+b*i+c;
+    for(int i = args.xMin; i < args.xMax; i++){
+        coor[i+args.xMax].x = i;
+        coor[i+args.xMax].y = (args.a*i*i)+(args.b*i)+args.c;
     }
 
     pthread_exit((void *) coor);
@@ -61,8 +58,11 @@ void joinThread(pthread_t tid[]) {
 
         coordinate* coord = (coordinate *) argCoord; //váriavel que armazena os pontos a serem plotados
     }
-    
-      
+
+    // for(int i = 0; i < nthreads; i += nthreads){
+        
+        
+    // }     
 }
 
 void* transform(char* eq){

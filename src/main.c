@@ -1,15 +1,17 @@
 #include <stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include <string.h>
+#include <stdlib.h>
 #include <math.h>
-#include"bmp.h"
-#include"concurrentmath.h"
+#include "../lib/bmp.h"
+#include "../lib/concurrentmath.h"
 
 int main(int argc, char* argv[])
 {   
 
     int height = 500;
     int width  = 500;
+    pthread_t tid[nthreads];
+
     if(argc > 2){
         height = atoi(argv[2]);
         width = atoi(argv[1]);        
@@ -87,6 +89,14 @@ int main(int argc, char* argv[])
     // strtol("x*x*x+7-8*x+5/2", &ptr,0);
     // transform(str);
     // printf("atoi -- %d\n",atoi("123456+78910-111213"));
+    createThread(tid);
+    
+    for(int i = 0; i < nthreads; i++){
+        joinThread(tid[i]);
+    }
+
     generateBitmapImage(calcular(width/2,-width/2,-1,0,0), height, width, imageFileName);    
     printf("%s generated!\n", imageFileName);
+
+    free(tid);
 }
