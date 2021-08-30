@@ -1,11 +1,10 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-#include<string.h>
-#include<pthread.h>
-#include"concurrentmath.h"
-
-#define NTHREADS 4
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+#include <pthread.h>
+#include "../lib/concurrentmath.h"
+#include "../lib/threadvariables.h"
 
 int gA;
 int gB;
@@ -14,7 +13,7 @@ int gXMax;
 int gXMin;
 coordinate* gOutput;
 
-void* tarefa(void*arg){
+void* taskCalculate(void*arg){
 
     long long int id = (long long int) arg;
     
@@ -68,7 +67,7 @@ coordinate* threads(int xMax, int xMin, int a, int b, int c){
     }    
 
     for(long long int i = 0; i < NTHREADS; i++){
-        if(pthread_create(tid+i, NULL, tarefa, (void*)i)){
+        if(pthread_create(tid+i, NULL, taskCalculate, (void*)i)){
             printf("ERROR... pthread_create");
             exit(2);
         }

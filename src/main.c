@@ -2,25 +2,25 @@
 #include<string.h>
 #include<stdlib.h>
 #include <math.h>
-#include"bmp.h"
-#include"concurrentmath.h"
+#include"../lib/bmp.h"
+#include"../lib/concurrentmath.h"
 
-int main(int argc, char* argv[])
-{   
+int main(int argc, char* argv[]){
 
     int height = 500;
     int width  = 500;
-    if(argc > 2){
-        height = atoi(argv[2]);
-        width = atoi(argv[1]);        
+    int range = 500;
+    if(argc > 1){
+        
+        range = atoi(argv[1]);
     }
     //coordinate* c = calcular(250,-250,1,0,0);
     //printf("%d--%d\n",c[0].x ,c[0].y);
     
-//    unsigned char image[height][width][BYTES_PER_PIXEL];
+    // unsigned char image[height][width][BYTES_PER_PIXEL];
     char* imageFileName;
     imageFileName = (char*) malloc(sizeof(int)*2 + sizeof(char)*5);
-    sprintf(imageFileName,"%dx%d.bmp",width,height);
+    sprintf(imageFileName,"%dx%d.bmp",range,range);
 
     // int i, j;
     // int nj,ni;
@@ -85,10 +85,10 @@ int main(int argc, char* argv[])
     
     // printf("%d\n", sizeof(int));
 
-    int **arr = (int **)malloc(3 * sizeof(int *));
-    for (int i=0; i<3; i++)
-         arr[i] = (int *)malloc(4 * sizeof(int));
-    arr[0][0] = 1;
+    // int **arr = (int **)malloc(3 * sizeof(int *));
+    // for (int i=0; i<3; i++)
+    //      arr[i] = (int *)malloc(4 * sizeof(int));
+    // arr[0][0] = 1;
     // printf("%d\n",  arr[0][0]);
 
     // char* ptr;
@@ -98,14 +98,19 @@ int main(int argc, char* argv[])
     // transform(str);
     // printf("atoi -- %d\n",atoi("123456+78910-111213"));
     //3x^2+5x+7
-    coordinate* a = threads(width/2,-width/2,1,0,0);
-    coordinate* b = calcular(width/2,-width/2,1,0,0);
+    coordinate* a = threads(range/2,-range/2,1,3,0);
+    coordinate* b = calcular(range/2,-range/2,0,2,0);
 
-    for(int i =0; i < 500; i++){
-        printf("seq: [%d, %d]\n", b[i].x, b[i].y);
-        printf("thread: [%d, %d]\n", a[i].x, a[i].y);
-    }
+    // for(int i =0; i < range; i++){
+    //     if(a[i].x != b[i].x || a[i].y != b[i].y){
+    //         printf("seq: [%d, %d]\n", b[i].x, b[i].y);
+    //         printf("thread: [%d, %d]\n", a[i].x, a[i].y);
+    //     }
+    // }
     
-    generateBitmapImage(threads(width/2,-width/2,0,0,2), height, width, imageFileName);
-    printf("%s generated!\n", imageFileName);
+    //generateBitmapImage(a, range, range, imageFileName);
+    
+    threadBMP(a, range, range);
+    printf("Image generated!\n");
+
 }
