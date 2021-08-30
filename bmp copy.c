@@ -46,41 +46,41 @@ void generateBitmapImage (point* coor, int height, int width, char* imageFileNam
             
             if(coor[i+width/2].y+height/2 > 0){
 
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][2] = 0;
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][1] = 0;
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][0] = 0;
+                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][2] = 136;
+                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][1] = 136;
+                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][0] = 136;
                 
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][2] = 0;
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][1] = 0;
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][0] = 0;
+                // image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][2] = 0;
+                // image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][1] = 0;
+                // image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][0] = 0;
 
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][2] = 0;
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][1] = 0;
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][0] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][2] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][1] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][0] = 0;
 
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][2] = 0;
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][1] = 0;
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][0] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][2] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][1] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][0] = 0;
 
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][2] = 0;
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][1] = 0;
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][0] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][2] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][1] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][0] = 0;
 
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][2] = 0;
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][1] = 0;
-                image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][0] = 0;
+                // image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][2] = 0;
+                // image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][1] = 0;
+                // image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][0] = 0;
 
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][2] = 0;
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][1] = 0;
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][0] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][2] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][1] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][0] = 0;
 
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][2] = 0;
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][1] = 0;
-                image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][0] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][2] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][1] = 0;
+                // image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][0] = 0;
                 
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][2] = 0;
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][1] = 0;
-                image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][0] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][2] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][1] = 0;
+                // image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][0] = 0;
             }
             
         }
@@ -97,59 +97,57 @@ void generateBitmapImage (point* coor, int height, int width, char* imageFileNam
             
             if(coor[i+height/2].y+height/2 > 0){
 
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][2] = 0;
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][1] = 0;
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][0] = 0;
+                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][2] = 136;
+                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][1] = 136;
+                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][0] = 136;
                 
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2+1][2] = 0;
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2+1][1] = 0;
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2+1][0] = 0;
-
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2][2] = 0;
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2][1] = 0;
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2][0] = 0;
-
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2+1][2] = 0;
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2+1][1] = 0;
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2+1][0] = 0;
-
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2][2] = 0;
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2][1] = 0;
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2][0] = 0;
-
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2-1][2] = 0;
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2-1][1] = 0;
-                image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2-1][0] = 0;
-
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2-1][2] = 0;
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2-1][1] = 0;
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2-1][0] = 0;
-
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2-1][2] = 0;
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2-1][1] = 0;
-                image[coor[i+height/2].y+height/2+1][coor[i+height/2].x+width/2-1][0] = 0;
                 
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2+1][2] = 0;
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2+1][1] = 0;
-                image[coor[i+height/2].y+height/2-1][coor[i+height/2].x+width/2+1][0] = 0;
             }
             
         }
     }
-    
-    // for(int i = 0; i < height; i++){
-    //     // printf("%d+++%f\n", i,sqrt(height));
-    //     // printf("\n%d--%d\n",values[i][1],values[i][0]);
-    //     if(values[i][1]+height/2 > height){
-    //         continue;
-    //     }
-    //     if(values[i][1]+height/2 == -1){
-    //         printf("%d\n", values[i][0]-height/2);
-    //     }
-    //     image[values[i][1]+height/2][values[i][0]-height/2][2] = 255;
-    //     image[values[i][1]+height/2][values[i][0]-height/2][1] = 0;
-    //     image[values[i][1]+height/2][values[i][0]-height/2][0] = 0;
-    // }
+    for(int i = 0; i < height; i++){
+        int count = 0;
+        int nj;
+        int pj;
+        for(int j = 0; j < width; j++){
+            if(coor[j].x < 0){
+                if(image[i][j][0] == 136 && image[i][j][1] == 136 && image[i][j][2] == 136){
+                    nj = j;                    
+                }
+                if(nj == j){
+                    image[i][nj][0] = 0;
+                    image[i][nj][1] = 0;
+                    image[i][nj][2] = 0;
+                  
+                    image[i+1][nj][0] = 0;
+                    image[i+1][nj][1] = 0;
+                    image[i+1][nj][2] = 0;
+                    
+                    // image[i][nj-1][0] = 0;
+                    // image[i][nj-1][1] = 0;
+                    // image[i][nj-1][2] = 0;
+
+                }
+            }else{
+                if(image[i][j][0] == 136 && image[i][j][1] == 136 && image[i][j][2] == 136){
+                    pj = j;
+                }
+                if(pj == j){
+                    
+                    image[i][pj][0] = 0;
+                    image[i][pj][1] = 0;
+                    image[i][pj][2] = 0;
+
+                    // image[i][pj-1][0] = 0;
+                    // image[i][pj-1][1] = 0;
+                    // image[i][pj-1][2] = 0;
+                }
+            }
+                            
+
+        }
+    }
 
     unsigned char* img = (unsigned char*) image;
     int widthInBytes = width * BYTES_PER_PIXEL;

@@ -80,13 +80,32 @@ int main(int argc, char* argv[])
     //     }
     // }
     
-    // char str[20] = "x*x*x+77-8*x+5/2";
+    char str[20] = "x*x*x+77-8*x+5/2";
+    // printf("%c -- %d\n", str[strlen(str)],strlen(str));
+    
+    // printf("%d\n", sizeof(int));
+
+    int **arr = (int **)malloc(3 * sizeof(int *));
+    for (int i=0; i<3; i++)
+         arr[i] = (int *)malloc(4 * sizeof(int));
+    arr[0][0] = 1;
+    // printf("%d\n",  arr[0][0]);
+
     // char* ptr;
     // printf("input: %s\n", str);
     // substitui(str);
     // strtol("x*x*x+7-8*x+5/2", &ptr,0);
     // transform(str);
     // printf("atoi -- %d\n",atoi("123456+78910-111213"));
-    generateBitmapImage(calcular(width/2,-width/2,-1,0,0), height, width, imageFileName);    
+    //3x^2+5x+7
+    coordinate* a = threads(width/2,-width/2,1,0,0);
+    coordinate* b = calcular(width/2,-width/2,1,0,0);
+
+    for(int i =0; i < 500; i++){
+        printf("seq: [%d, %d]\n", b[i].x, b[i].y);
+        printf("thread: [%d, %d]\n", a[i].x, a[i].y);
+    }
+    
+    generateBitmapImage(threads(width/2,-width/2,0,0,2), height, width, imageFileName);
     printf("%s generated!\n", imageFileName);
 }
