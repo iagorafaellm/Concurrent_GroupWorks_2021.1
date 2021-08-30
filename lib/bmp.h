@@ -11,7 +11,7 @@
     }point;
 
     //generates concurrently the image
-    void threadBMP (point* points,int height, int width);
+    void concurrentyGenerateBitmapImage (point* points,int height, int width);
     //generate the image
     void generateBitmapImage(point* coor, int height, int width, char* imageFileName);
     //create the fileHeader that is needed to create a bitmap image

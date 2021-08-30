@@ -28,7 +28,7 @@ void* taskCalculate(void*arg){
     pthread_exit(NULL);
 }
 
-coordinate* threads(int xMax, int xMin, int a, int b, int c){
+coordinate* concurrentyCalculate(int xMax, int xMin, int a, int b, int c){
 
     gA = a;
     gB = b;

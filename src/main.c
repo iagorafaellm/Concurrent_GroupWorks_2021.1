@@ -98,7 +98,7 @@ int main(int argc, char* argv[]){
     // transform(str);
     // printf("atoi -- %d\n",atoi("123456+78910-111213"));
     //3x^2+5x+7
-    coordinate* a = threads(range/2,-range/2,1,3,0);
+    coordinate* a = concurrentyCalculate(range/2,-range/2,1,3,0);
     coordinate* b = calcular(range/2,-range/2,0,2,0);
 
     // for(int i =0; i < range; i++){
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]){
     
     //generateBitmapImage(a, range, range, imageFileName);
     
-    threadBMP(a, range, range);
+    concurrentyGenerateBitmapImage(a, range, range);
     printf("Image generated!\n");
 
 }

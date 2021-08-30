@@ -75,7 +75,7 @@ void* taskBMP(void*arg){
     pthread_exit(NULL);
 }
 
-void threadBMP (point* points,int height, int width){    
+void concurrentyGenerateBitmapImage (point* points,int height, int width){    
     gHeight = height;
     gWidth = width;
     // unsigned char image[height][width][BYTES_PER_PIXEL];
