@@ -82,7 +82,7 @@ coordinate* concurrentyCalculate(int xMax, int xMin, int a, int b, int c){
     return gOutput;
 }
 
-coordinate* calcular(int xMax, int xMin, int a, int b, int c){
+coordinate* calculate(int xMax, int xMin, int a, int b, int c){
     coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(xMax+abs(xMin)));
     
     for(int i = xMin; i < xMax; i++){
