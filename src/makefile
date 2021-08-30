@@ -3,7 +3,7 @@ CC = gcc
 all: main bmp.c concurrentmath.c
 
 main: main.o bmp.o concurrentmath.o
-	${CC} -o main main.o bmp.o concurrentmath.o -lm
+	${CC} -o main main.o bmp.o concurrentmath.o -lm -lpthread
 
 main.o: main.c
 	${CC} -o main.o main.c -c -Wall -lm -w

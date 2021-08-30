@@ -7,6 +7,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include <math.h>
+#include<pthread.h>
 #include"bmp.h"
 
 unsigned char ***gImage;
@@ -99,9 +100,9 @@ void* tarefa(void*arg){
     pthread_exit(NULL);
 }
 
-void threadBMP (int height, int width){
+void threadBMP (point* points,int height, int width){
 
-    coor = (point*) malloc(sizeof(point)*width);
+    coor = points;
     if(coor == NULL){
         printf("ERROR... malloc");
         exit(1);
