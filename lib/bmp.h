@@ -10,6 +10,8 @@
         int y;
     }point;
 
+    //generates concurrently the image
+    void threadBMP (int height, int width);
     //generate the image
     void generateBitmapImage(point* coor, int height, int width, char* imageFileName);
     //create the fileHeader that is needed to create a bitmap image

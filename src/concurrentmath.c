@@ -4,8 +4,7 @@
 #include <string.h>
 #include <pthread.h>
 #include "../lib/concurrentmath.h"
-
-#define NTHREADS 4
+#include "../lib/threadvariables.h"
 
 int gA;
 int gB;
@@ -20,7 +19,8 @@ void* tarefa(void*arg){
     
     int i = gXMin < 0 ? (id - abs(gXMin)) : gXMin - id;
 
-    for(i; i < gXMax; i+=NTHREADS){        
+    for(i; i < gXMax; i+=NTHREADS){
+        
         gOutput[i+gXMax].x = i;
         gOutput[i+gXMax].y = gA*(i*i)+gB*i+gC;
     }
@@ -87,7 +87,8 @@ coordinate* calcular(int xMax, int xMin, int a, int b, int c){
     
     for(int i = xMin; i < xMax; i++){
         coor[i+xMax].x = i;
-        coor[i+xMax].y = a*(i*i)+b*i+c;        
+        coor[i+xMax].y = a*(i*i)+b*i+c;
+        //printf("[%d]\n", coor[i+xMax].y);
     }
 
     return coor;

@@ -107,7 +107,8 @@ int main(int argc, char* argv[]){
     //     }
     // }
     
-    generateBitmapImage(a, range, range, imageFileName);
+    //generateBitmapImage(a, range, range, imageFileName);
+    threadBMP(a, range, range, imageFileName);
     printf("%s generated!\n", imageFileName);
 
 }

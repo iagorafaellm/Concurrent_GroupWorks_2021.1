@@ -9,22 +9,189 @@
 #include <math.h>
 #include"bmp.h"
 
+unsigned char ***gImage;
+
+void* tarefa(void*arg){
+
+    long long int id = (long long int) arg;
+
+    for (int i = id; i < height; i += NTHREADS){
+        gImage[i] = (unsigned char **) malloc (sizeof(unsigned char *) *width);
+        if(gImage[i] == NULL){
+            printf("ERROR... malloc");
+            exit(1);
+        }
+        for (int j = id; j < width; j += NTHREADS){
+            gImage[i][j] = (unsigned char *) malloc (sizeof(unsigned char) *BYTES_PER_PIXEL);
+            if(gImage[i][j] == NULL){
+                printf("ERROR... malloc");
+                exit(1);
+            }
+        }
+    }
+
+    for(int i = id;i<height;i+=NTHREADS){
+        for(int j = id; j< width;j+=NTHREADS){
+            if(j == width/2 || i == height/2){
+                gImage[i][j][2] = 119; ///red
+                gImage[i][j][1] = 136; ///blue
+                gImage[i][j][0] = 153; ///green
+            }
+            else{
+                gImage[i][j][2] = 255; ///red
+                gImage[i][j][1] = 255; ///blue
+                gImage[i][j][0] = 255; ///green
+            }
+        }
+    }
+    
+    // int i = gXMin < 0 ? (id - abs(gXMin)) : gXMin - id;
+
+    for(int i = id - width/2; i < width/2; i+=NTHREADS){
+        //here we verify if the values fit to the size of the array(height)
+        if(
+        coor[i+width/2].y+height/2 > height ||
+        coor[i+width/2].x+width/2 > width ||
+        i+height/2 > height
+        ) continue;
+        
+        if(coor[i+width/2].y+height/2 > 0){                
+
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][2] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][1] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][0] = 0;
+            
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][2] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][1] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][0] = 0;
+
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][2] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][1] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][0] = 0;
+
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][2] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][1] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][0] = 0;
+
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][2] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][1] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][0] = 0;
+
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][2] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][1] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][0] = 0;
+
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][2] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][1] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][0] = 0;
+
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][2] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][1] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][0] = 0;
+            
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][2] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][1] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][0] = 0;            
+        }
+    }
+
+    pthread_exit(NULL);
+}
+
+void threadBMP (int height, int width){
+    char* imageFileName;
+    imageFileName = (char*) malloc(sizeof(int)*2 + sizeof(char)*5);
+    if(imageFileName == NULL){
+        printf("ERROR... malloc");
+        exit(1);
+    }
+    sprintf(imageFileName,"%dx%d.bmp",range,range);
+
+    pthread_t *tid = (pthread_t *) malloc (sizeof(pthread_t) *NTHREADS);
+    if(tid == NULL){
+        printf("ERROR... malloc");
+        exit(1);
+    }
+
+    for (int i = 0; i < NTHREADS; i++){
+        if(pthread_create(tid+i, NULL, tarefa, (void *)i)){
+            printf("ERROR... pthread_create");
+            exit(2);
+        }
+    }
+
+    for (int i = 0; i < NTHREADS; i++){
+        if(pthread_join(*(tid+i), NULL){
+            printf("ERROR... pthread_join");
+            exit(3);
+        }
+    }
+
+    drawImage(height, width, imageFileName);
+}
+
+void drawImage(int height, int width, char* imageFileName){
+    unsigned char* img = (unsigned char*) gImage;
+    int widthInBytes = width * BYTES_PER_PIXEL;
+    unsigned char padding[3] = {0, 0, 0};
+    int paddingSize = (4 - (widthInBytes) % 4) % 4;
+    //widthInBytes = (4 - (widthInBytes) % 4) % 4;
+
+    int stride = (widthInBytes) + paddingSize;
+
+    FILE* imageFile = fopen(imageFileName, "wb");
+
+    unsigned char* fileHeader = createBitmapFileHeader(height, stride);
+    fwrite(fileHeader, 1, FILE_HEADER_SIZE, imageFile);
+
+    unsigned char* infoHeader = createBitmapInfoHeader(height, width);
+    fwrite(infoHeader, 1, INFO_HEADER_SIZE, imageFile);
+
+    int i;
+    for (i = 0; i < height; i++) {
+        fwrite(img + (i*widthInBytes), BYTES_PER_PIXEL, width, imageFile);
+        if(width > height)
+            fwrite(padding, 1, paddingSize, imageFile);
+    }
+    fclose(imageFile);
+}
 
 void generateBitmapImage (point* coor, int height, int width, char* imageFileName)
 {
-    unsigned char image[height][width][BYTES_PER_PIXEL];
+
+    //alocando dinamicamente as variáveis height, width e BYTES_PER_PIXEL
+    gImage = (unsigned char ***) malloc (sizeof(unsigned char **) *height);
+    if(gImage == NULL){
+        printf("ERROR... malloc");
+        exit(1);
+    }
+
+    for (int i = 0; i < height; i++){
+        gImage[i] = (unsigned char **) malloc (sizeof(unsigned char *) *width);
+        if(gImage[i] == NULL){
+            printf("ERROR... malloc");
+            exit(1);
+        }
+        for (int j = 0; j < width; j++){
+            gImage[i][j] = (unsigned char *) malloc (sizeof(unsigned char) *BYTES_PER_PIXEL);
+            if(gImage[i][j] == NULL){
+                printf("ERROR... malloc");
+                exit(1);
+            }
+        }
+    }
 
     for(int i = 0;i<height;i++){
         for(int j = 0; j< width;j++){
             if(j == width/2 || i == height/2){
-                image[i][j][2] = 119; ///red
-                image[i][j][1] = 136; ///blue
-                image[i][j][0] = 153; ///green
+                gImage[i][j][2] = 119; ///red
+                gImage[i][j][1] = 136; ///blue
+                gImage[i][j][0] = 153; ///green
             }
             else{
-                image[i][j][2] = 255; ///red
-                image[i][j][1] = 255; ///blue
-                image[i][j][0] = 255; ///green
+                gImage[i][j][2] = 255; ///red
+                gImage[i][j][1] = 255; ///blue
+                gImage[i][j][0] = 255; ///green
             }
         }
     }
@@ -39,119 +206,45 @@ void generateBitmapImage (point* coor, int height, int width, char* imageFileNam
         
         if(coor[i+width/2].y+height/2 > 0){                
 
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][2] = 0;
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][1] = 0;
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][0] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][2] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][1] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][0] = 0;
             
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][2] = 0;
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][1] = 0;
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][0] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][2] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][1] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][0] = 0;
 
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][2] = 0;
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][1] = 0;
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][0] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][2] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][1] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][0] = 0;
 
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][2] = 0;
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][1] = 0;
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][0] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][2] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][1] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][0] = 0;
 
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][2] = 0;
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][1] = 0;
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][0] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][2] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][1] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][0] = 0;
 
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][2] = 0;
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][1] = 0;
-            image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][0] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][2] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][1] = 0;
+            gImage[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][0] = 0;
 
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][2] = 0;
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][1] = 0;
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][0] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][2] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][1] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][0] = 0;
 
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][2] = 0;
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][1] = 0;
-            image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][0] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][2] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][1] = 0;
+            gImage[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][0] = 0;
             
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][2] = 0;
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][1] = 0;
-            image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][0] = 0;            
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][2] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][1] = 0;
+            gImage[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][0] = 0;            
         }
     }
-            
-    
-    // else{
-    //     for(int i = -height/2; i < height/2; i++){
-    //         //here we verify if the values fit to the size of the array(height)
-    //         if(
-    //         coor[i+width/2].y+height/2 > height ||
-    //         coor[i+width/2].x+width/2 > width ||
-    //         i+height/2 > height || 
-    //         i+height/2 > width
-    //         ) continue;
-            
-    //         if(coor[i+height/2].x+width/2 > 0){
 
-    //             if(coor[i+height/2].y+height/2 == height/2){
-    //                 image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][2] = 255;
-    //                 image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][1] = 0;
-    //                 image[coor[i+height/2].y+height/2][coor[i+height/2].x+width/2][0] = 0;
-    //                 printf("%d %d\n", coor[i+width/2].x,coor[i+width/2].y);
-                    
-    //             }
-                
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][2] = 0;
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][1] = 0;
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2][0] = 0;
-                
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][2] = 0;
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][1] = 0;
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2+1][0] = 0;
-
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][2] = 0;
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][1] = 0;
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2][0] = 0;
-
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][2] = 0;
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][1] = 0;
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2+1][0] = 0;
-
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][2] = 0;
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][1] = 0;
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2][0] = 0;
-
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][2] = 0;
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][1] = 0;
-    //             image[coor[i+width/2].y+height/2][coor[i+width/2].x+width/2-1][0] = 0;
-
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][2] = 0;
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][1] = 0;
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2-1][0] = 0;
-
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][2] = 0;
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][1] = 0;
-    //             image[coor[i+width/2].y+height/2+1][coor[i+width/2].x+width/2-1][0] = 0;
-                
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][2] = 0;
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][1] = 0;
-    //             image[coor[i+width/2].y+height/2-1][coor[i+width/2].x+width/2+1][0] = 0;
-    //         }            
-    //     }
-    // }
-    
-    // for(int i = 0; i < height; i++){
-    //     // printf("%d+++%f\n", i,sqrt(height));
-    //     // printf("\n%d--%d\n",values[i][1],values[i][0]);
-    //     if(values[i][1]+height/2 > height){
-    //         continue;
-    //     }
-    //     if(values[i][1]+height/2 == -1){
-    //         printf("%d\n", values[i][0]-height/2);
-    //     }
-    //     image[values[i][1]+height/2][values[i][0]-height/2][2] = 255;
-    //     image[values[i][1]+height/2][values[i][0]-height/2][1] = 0;
-    //     image[values[i][1]+height/2][values[i][0]-height/2][0] = 0;
-    // }
-
-    unsigned char* img = (unsigned char*) image;
+    unsigned char* img = (unsigned char*) gImage;
     int widthInBytes = width * BYTES_PER_PIXEL;
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (widthInBytes) % 4) % 4;
