@@ -10,6 +10,7 @@
 #include"bmp.h"
 
 unsigned char ***gImage;
+point* coor;
 
 void* tarefa(void*arg){
 
@@ -99,6 +100,13 @@ void* tarefa(void*arg){
 }
 
 void threadBMP (int height, int width){
+
+    coor = (point*) malloc(sizeof(point)*width);
+    if(coor == NULL){
+        printf("ERROR... malloc");
+        exit(1);
+    }
+
     char* imageFileName;
     imageFileName = (char*) malloc(sizeof(int)*2 + sizeof(char)*5);
     if(imageFileName == NULL){
