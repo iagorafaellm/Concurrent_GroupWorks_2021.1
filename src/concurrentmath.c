@@ -8,14 +8,19 @@
 void* calcular(void* arg){
     calcArg args = *(calcArg *) arg;
     coordinate* coor = (coordinate*) malloc(sizeof(coordinate)*(args.xMax+abs(args.xMin)));
+
+    //printf("%d\n", args.xMin);
+        
     
     for(int i = args.xMin; i < args.xMax; i += nthreads){
         coor[i+args.xMax].x = i;
         coor[i+args.xMax].y = (args.a*i*i)+(args.b*i)+args.c;
+
+        
+        //printf("%d %d\n", coor[i+args.xMax].x, coor[i+args.xMax].y);
+
+        coordsArray[i+args.xMax] = *coor;
     }
-
-    coordsArray[i] = coor;
-
     pthread_exit(NULL);
 }
 
@@ -31,14 +36,18 @@ pthread_t* tid = (pthread_t *) malloc(sizeof(pthread_t) * nthreads);
 }
 
 //cria as threads
-void createThread(pthread_t tid[]) {
+void createThread(pthread_t tid[], calcArg argsBase) {
     calcArg args[nthreads];
     for(int i = 0; i < nthreads; i++) {
-        args[i].xMax = width/2;
-        args[i].xMin = (-width/2) + i;
-        args[i].a = -1;
-        args[i].b = 0;
-        args[i].c = 0;
+        args[i].xMax = argsBase.xMax;
+        args[i].xMin = argsBase.xMin + i;
+        args[i].a = argsBase.a;
+        args[i].b = argsBase.b;
+        args[i].c = argsBase.c;
+
+        printf("%d\n", args[i].xMin);
+
+        
 
         if (pthread_create(&tid[i], NULL, calcular, (void *) &args[i])) {
             printf("Erro na pthread_create()\n");
@@ -50,14 +59,14 @@ void createThread(pthread_t tid[]) {
 //espera as threads terminarem
 void joinThread(pthread_t tid[]) {
     for(int i = 0; i < nthreads; i++) {
-        void* argCoor; //variável que usamos para armazenar o retorno da função calcular
+        //variável que usamos para armazenar o retorno da função calcular
 
-        if (pthread_join(tid[i], &argCoor)) {
+        if (pthread_join(tid[i], NULL)) {
             printf("Erro na pthread_join()\n");
             exit(-3);
         }
 
-        coordinate* coord = (coordinate *) argCoord; //váriavel que armazena os pontos a serem plotados
+        
     }
 }
 

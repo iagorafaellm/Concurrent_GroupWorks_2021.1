@@ -1,15 +1,15 @@
 #pragma once
 #ifndef CONCURRENTMATH_H
 
-    //variáveis globais
     int nthreads; //número de threads a serem criadas
-    coordinate coordsArray[];
 
     ///the coordinates where we store the values
     typedef struct{
         int x;
         int y;
     }coordinate;
+
+    coordinate *coordsArray;
 
     typedef struct{
         int pos;
