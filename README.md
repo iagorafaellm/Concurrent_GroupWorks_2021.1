@@ -2,12 +2,6 @@
 
 *Solução concorrente para esboço de gráficos de funções do segundo grau em um arquivo bitmap.*
 
-## Tabela de Conteúdo
-
-1. [Estrutura do repositório](#estrutura-do-repositório)
-2. [Pré-requisito](#pré-requisito)
-3. [Autoria](#autoria)
-
 ## Estrutura do repositório
 * [lib](lib)
     - [bmp.h](bmp.h): Header de bmp.c.
@@ -31,7 +25,7 @@ Antes de começar, verifique se você atendeu ao seguinte requisito:
 * Você instalou a versão mais recente de `make`
 
 
-## Como gerar um arquivo .bmp?
+## Como gerar um arquivo `.bmp`?
 
 
 1. Compile o programa
