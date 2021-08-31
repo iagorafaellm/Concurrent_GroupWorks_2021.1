@@ -3,6 +3,10 @@
 *Solução concorrente para esboço de gráficos de funções do segundo grau em um arquivo bitmap.*
 
 ## Estrutura do repositório
+
+### branch: master
+A versão final, funcional e mais atualizada do nosso projeto se encontra na branch master.
+
 * [lib](lib/)
     - [bmp.h](lib/bmp.h/): Header de bmp.c.
     - [concurrentmath.h](lib/concurrentmath.h/): Header de concurrentmath.c.
