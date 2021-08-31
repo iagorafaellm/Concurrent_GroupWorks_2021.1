@@ -5,6 +5,7 @@
 ## Estrutura do repositório
 
 ### branch: master
+
 A versão final, funcional e mais atualizada do nosso projeto se encontra na branch master.
 
 * [lib](lib/)
