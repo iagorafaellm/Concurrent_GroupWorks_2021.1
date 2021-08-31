@@ -6,7 +6,7 @@
 
 ### branch: master
 
-A versão final, funcional e mais atualizada do nosso projeto se encontra na branch master.
+* A versão final, funcional e mais atualizada do nosso projeto se encontra na branch master.
 
 * [lib](lib/)
     - [bmp.h](lib/bmp.h/): Header de bmp.c.
