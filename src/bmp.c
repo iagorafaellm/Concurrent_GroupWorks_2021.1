@@ -9,7 +9,7 @@
 #include <math.h>
 #include <pthread.h>
 #include "../lib/bmp.h"
-#include "../lib/threadvariables.h"
+#define NTHREADS 2
 
 unsigned char* createBitmapFileHeader (int height, int stride);
 unsigned char* createBitmapInfoHeader (int height, int width);

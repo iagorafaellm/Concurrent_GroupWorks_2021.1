@@ -4,8 +4,8 @@
 #include <string.h>
 #include <pthread.h>
 #include "../lib/concurrentmath.h"
-#include "../lib/threadvariables.h"
 #include"../lib/timer.h"
+#define NTHREADS 4
 
 int gA;
 int gB;
@@ -15,18 +15,17 @@ int gXMin;
 coordinate* gOutput;
 
 void* taskCalculate(void*arg){
+    
 
     long long int id = (long long int) arg;
     
-    //int i = gXMin < 0 ? (id - abs(gXMin)) : gXMin - id;
-
     for(int i = (id - abs(gXMin)); i < gXMax; i+=NTHREADS){
         
         gOutput[i+gXMax].x = i;
         gOutput[i+gXMax].y = gA*(i*i)+gB*i+gC;
 
     }
-
+   
     pthread_exit(NULL);
 }
 
@@ -39,13 +38,14 @@ coordinate* concurrentyCalculate(int xMax, int xMin, int a, int b, int c){
     gXMax = xMax;
 
     gOutput = (coordinate*) malloc(sizeof(coordinate)*(gXMax+abs(gXMin)));
+
     if(gOutput == NULL){
         printf("ERROR... malloc");
         exit(1);
     }
 
     pthread_t *tid;
-    tid = (pthread_t*) malloc(sizeof(pthread_t)*NTHREADS);    
+    tid = (pthread_t*) malloc(sizeof(pthread_t)*NTHREADS);
     if(tid == NULL){
         printf("ERROR... malloc");
         exit(1);
@@ -68,19 +68,21 @@ coordinate* concurrentyCalculate(int xMax, int xMin, int a, int b, int c){
         }
     }    
 
-    for(long long int i = 0; i < NTHREADS; i++){
+    for(long long int i = 0; i < NTHREADS; i++){        
         if(pthread_create(tid+i, NULL, taskCalculate, (void*)i)){
             printf("ERROR... pthread_create");
             exit(2);
         }
     }
 
+   
     for(int i = 0; i < NTHREADS; i++){
         if(pthread_join(*(tid+i), NULL)){
             printf("ERROR... pthread_join");
             exit(3);
         }
     }
+    
     return gOutput;
 }
 
