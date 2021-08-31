@@ -11,9 +11,7 @@ int main(int argc, char* argv[]){
 
     double begin;
     double end;
-
-    int height = 500;
-    int width  = 500;
+    
     int range = 1000;
 
     int a,b,c;
@@ -31,11 +29,7 @@ int main(int argc, char* argv[]){
     char* imageFileName;
     imageFileName = (char*) malloc(sizeof(int)*2 + sizeof(char)*5);
     sprintf(imageFileName,"%dx%d.bmp",range,range);
-
     
-    char str[20] = "x*x*x+77-8*x+5/2";
-
-
     printf("Computing the function: \n");
 
     GET_TIME(begin);
@@ -49,12 +43,12 @@ int main(int argc, char* argv[]){
     printf("    Concurrent: %lf\n", end-begin);
 
     
-    // for(int i =0; i < range; i++){
-    //     if(a[i].x != b[i].x || a[i].y != b[i].y){
-    //         printf("seq: [%d, %d]\n", b[i].x, b[i].y);
-    //         printf("thread: [%d, %d]\n", a[i].x, a[i].y);
-    //     }
-    // }
+    for(int i =0; i < range; i++){
+        if(calculateConc[i].x != caclculateSeq[i].x || calculateConc[i].y != caclculateSeq[i].y){
+            printf("seq: [%d, %d]\n", caclculateSeq[i].x, caclculateSeq[i].y);
+            printf("conq: [%d, %d]\n", calculateConc[i].x, calculateConc[i].y);
+        }
+    }
     
     printf("Generating the BITMAP: \n");
 

@@ -5,7 +5,7 @@
 #include <pthread.h>
 #include "../lib/concurrentmath.h"
 #include"../lib/timer.h"
-#define NTHREADS 4
+#define NTHREADS 8
 
 int gA;
 int gB;
@@ -92,27 +92,11 @@ coordinate* calculate(int xMax, int xMin, int a, int b, int c){
     for(int i = xMin; i < xMax; i++){
         coor[i+xMax].x = i;
         coor[i+xMax].y = a*(i*i)+b*i+c;
-        //printf("[%d]\n", coor[i+xMax].y);
     }
 
     return coor;
 }
 
-void* transform(char* eq){
-
-    char* token;
-    char* str;
-    char deli[3] = "x";
-    token = strtok(eq,deli);
-    while (token!=NULL)
-    {
-        str = (char*) malloc(sizeof(char)*strlen(token));
-        // if(strpbrk(token, 'x'))
-            // substitui(token);
-        printf("%s\n",token);
-        token = strtok(NULL, deli);        
-    }
-}
 
 //fita de operações - maquina de turing -- matriz: opeção /- posi~çao na str
 
@@ -210,5 +194,4 @@ void maquina(char* str, int min, int max){
             count ++;
         }
     }
-
 }

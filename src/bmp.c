@@ -9,7 +9,7 @@
 #include <math.h>
 #include <pthread.h>
 #include "../lib/bmp.h"
-#define NTHREADS 2
+#define NTHREADS 8
 
 unsigned char* createBitmapFileHeader (int height, int stride);
 unsigned char* createBitmapInfoHeader (int height, int width);
@@ -76,24 +76,6 @@ void* taskBMP(void*arg){
 void concurrentyGenerateBitmapImage (point* points,int height, int width){    
     gHeight = height;
     gWidth = width;
-    // unsigned char image[height][width][BYTES_PER_PIXEL];
-    // gImage = (unsigned char***) malloc(sizeof(unsigned char **)*gHeight);
-    //  for (int i = 0; i < gHeight; i++){        
-    //     gImage[i] = (unsigned char **) malloc (sizeof(unsigned char *) *gWidth);        
-    //     if(gImage[i] == NULL){
-    //         printf("ERROR... malloc");
-    //         exit(1);
-    //     }        
-    //     for (int j = 0; j < gWidth; j++){
-    //         gImage[i][j] = (unsigned char *) malloc (sizeof(unsigned char) *BYTES_PER_PIXEL);
-    //         if(gImage[i][j] == NULL){
-    //             printf("ERROR... malloc");
-    //             exit(1);
-    //         }
-    //     }
-    // }
-    // gImage = image;
-    
     
     //Paint the canvas
     for(int i = 0;i<gHeight;i++){       
@@ -156,8 +138,7 @@ void drawImage(int height, int width, char* imageFileName){
     int widthInBytes = width * BYTES_PER_PIXEL;
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (widthInBytes) % 4) % 4;
-    //widthInBytes = (4 - (widthInBytes) % 4) % 4;
-
+   
     int stride = (widthInBytes) + paddingSize;
 
     FILE* imageFile = fopen(imageFileName, "wb");
@@ -180,29 +161,7 @@ void drawImage(int height, int width, char* imageFileName){
 void generateBitmapImage (point* coor,int height, int width, char* imageFileName)
 {
 
-    unsigned char image[height][width][BYTES_PER_PIXEL];
-    // unsigned char*** image;
-    //alocando dinamicamente as variáveis height, width e BYTES_PER_PIXEL
-    // image = (unsigned char ***) malloc (sizeof(unsigned char **) *height);
-    // if(image == NULL){
-    //     printf("ERROR... malloc");
-    //     exit(1);
-    // }
-
-    // for (int i = 0; i < height; i++){
-    //     image[i] = (unsigned char **) malloc (sizeof(unsigned char *) *width);
-    //     if(image[i] == NULL){
-    //         printf("ERROR... malloc");
-    //         exit(1);
-    //     }
-    //     for (int j = 0; j < width; j++){
-    //         image[i][j] = (unsigned char *) malloc (sizeof(unsigned char) *BYTES_PER_PIXEL);
-    //         if(image[i][j] == NULL){
-    //             printf("ERROR... malloc");
-    //             exit(1);
-    //         }
-    //     }
-    // }
+    unsigned char image[height][width][BYTES_PER_PIXEL];    
 
     for(int i = 0;i<height;i++){
         for(int j = 0; j< width;j++){
@@ -273,7 +232,6 @@ void generateBitmapImage (point* coor,int height, int width, char* imageFileName
     int widthInBytes = width * BYTES_PER_PIXEL;
     unsigned char padding[3] = {0, 0, 0};
     int paddingSize = (4 - (widthInBytes) % 4) % 4;
-    //widthInBytes = (4 - (widthInBytes) % 4) % 4;
 
     int stride = (widthInBytes) + paddingSize;
 
