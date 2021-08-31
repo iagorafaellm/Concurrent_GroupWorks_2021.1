@@ -2,6 +2,8 @@
 
 *Solução concorrente para esboço de gráficos de funções do segundo grau em um arquivo bitmap.*
 
+![image](https://user-images.githubusercontent.com/56727253/131444804-6ae9074d-a3b8-48b3-aeb7-5168c33d7c92.jpeg)
+
 ## Estrutura do repositório
 
 ### branch: master
