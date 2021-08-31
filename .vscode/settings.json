@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "threadvariables.h": "c"
+        "threadvariables.h": "c",
+        "timer.h": "c",
+        "bmp.h": "c"
     }
 }

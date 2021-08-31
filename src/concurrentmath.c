@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include "../lib/concurrentmath.h"
 #include "../lib/threadvariables.h"
+#include"../lib/timer.h"
 
 int gA;
 int gB;
@@ -17,19 +18,20 @@ void* taskCalculate(void*arg){
 
     long long int id = (long long int) arg;
     
-    int i = gXMin < 0 ? (id - abs(gXMin)) : gXMin - id;
+    //int i = gXMin < 0 ? (id - abs(gXMin)) : gXMin - id;
 
-    for(i; i < gXMax; i+=NTHREADS){
+    for(int i = (id - abs(gXMin)); i < gXMax; i+=NTHREADS){
         
         gOutput[i+gXMax].x = i;
         gOutput[i+gXMax].y = gA*(i*i)+gB*i+gC;
+
     }
 
     pthread_exit(NULL);
 }
 
 coordinate* concurrentyCalculate(int xMax, int xMin, int a, int b, int c){
-
+    
     gA = a;
     gB = b;
     gC = c;

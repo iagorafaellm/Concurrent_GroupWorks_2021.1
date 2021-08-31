@@ -15,19 +15,13 @@ unsigned char* createBitmapFileHeader (int height, int stride);
 unsigned char* createBitmapInfoHeader (int height, int width);
 void drawImage(int height, int width, char* imageFileName);
 
-unsigned char gImage[500][500][BYTES_PER_PIXEL];
+unsigned char gImage[1000][1000][BYTES_PER_PIXEL];
 point* coor;
 int gHeight;
 int gWidth;
 
 void* taskBMP(void*arg){
     long long int id = (long long int) arg;
-
-    printf("Entrei na task %d\n", id);
-    
-    
-
-    // int i = gXMin < 0 ? (id - abs(gXMin)) : gXMin - id;
     
     for(int i = id-gWidth/2; i < gWidth/2; i+=NTHREADS){
         //here we verify if the values fit to the size of the array(gHeight)
@@ -226,8 +220,6 @@ void generateBitmapImage (point* coor,int height, int width, char* imageFileName
         }
     }
 
-    printf("%d\n", image[0][0][0]);
-    
     for(int i = -width/2; i < width/2; i++){
         //here we verify if the values fit to the size of the array(height)
         if(
