@@ -9,9 +9,8 @@
     - [threadvariables.h](lib/threadvariables.h/): Header para utilizarmos NTHREADS em concurrentmath.c e em bmp.c.
     - [timer.h](lib/timer.h/): Biblioteca que utilizamos para avaliar o desempenho do programa.
 * [model_codes](model_codes/)
-<br>      *Ambos códigos de apoio ou modelo para o desenvolvimento do programa.*
-    - [bmp - Copia.c](model_codes/bmp%20-%20Copia.c)
-    - [model.c](model_codes/model.c/)
+    - [bmp - Copia.c](model_codes/bmp%20-%20Copia.c): Código de apoio ou modelo para o desenvolvimento do programa.
+    - [model.c](model_codes/model.c/): Código de apoio ou modelo para o desenvolvimento do programa.
 * [src](src/)
     - [bmp.c](src/bmp.c/): Arquivo que gera o bmp.
     - [concurrentmath.c](src/concurrentmath.c/): Arquivo que faz os cálculos de y.
