@@ -16,7 +16,7 @@
     - [bmp.c](bmp.c): Arquivo que gera o bmp.
     - [concurrentmath.c](concurrentmath.h): Arquivo que faz os cálculos de y.
     - [main.c](threadvariables.h): Arquivo principal.
-    - [makefile](makefile): Arquivo usado para compilar o programna.
+    - [makefile](makefile): Arquivo usado para compilar o programa.
 
 
 ## Pré-requisito
