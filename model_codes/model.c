@@ -4,7 +4,7 @@
 */
 
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
 
 const int BYTES_PER_PIXEL = 3; /// red, green, & blue
 const int FILE_HEADER_SIZE = 14;
