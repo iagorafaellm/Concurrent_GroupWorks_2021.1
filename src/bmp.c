@@ -132,8 +132,7 @@ void concurrentyGenerateBitmapImage (point* points,int height, int width){
 }
 
 void drawImage(int height, int width, char* imageFileName){
-    
-    
+
     unsigned char* img = (unsigned char*) gImage;
     int widthInBytes = width * BYTES_PER_PIXEL;
     unsigned char padding[3] = {0, 0, 0};
@@ -227,7 +226,6 @@ void generateBitmapImage (point* coor,int height, int width, char* imageFileName
         }
     }
 
-    
     unsigned char* img = (unsigned char*) image;
     int widthInBytes = width * BYTES_PER_PIXEL;
     unsigned char padding[3] = {0, 0, 0};

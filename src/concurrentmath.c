@@ -74,8 +74,7 @@ coordinate* concurrentyCalculate(int xMax, int xMin, int a, int b, int c){
             exit(2);
         }
     }
-
-   
+    
     for(int i = 0; i < NTHREADS; i++){
         if(pthread_join(*(tid+i), NULL)){
             printf("ERROR... pthread_join");
